@@ -4,6 +4,7 @@
 $(document).ready(function() {
 	$("#entryForm").on("submit", recordGiving);
 	$("#clearBtn").on("click", clearEntries);
+	$("#type").on("change", manageForm.checkInputs); //LISTEN FOR CHANGES TO THE SELECT ELEMENT
 	$("#summaryBtn, #hideBtn").on("click", function(e) {
 		$("#detailsDiv").slideToggle();
 		$("#summaryDiv").slideToggle();
@@ -19,8 +20,7 @@ const records = new Array(); //INITIALIZE AN ARRAY TO HOLD THE GIVING RECORDS
 //DEFINE PRIMARY FUNCTIONS IN THIS SECTION
 function recordGiving() { //GET THE ENTRY VALUES FROM THE FORM & RECORD THEM
 	const type = document.forms.entryForm.type.value;
-	const numEntries = document.forms.entryForm.querySelectorAll('div.row').length - 1; //SUBTRACT 1 FOR THE FIRST ROW OF ELEMENTS [REMOVE THE SELECT & SUBMIT]
-	for (let i = 0; i < numEntries; i++) {
+	for (let i = 0; i < manageForm.inputRows; i++) {
 		const id = document.forms.entryForm[i + 'number'].value;
 		const amount = document.forms.entryForm[i + 'amount'].value;
 		if (amount) { //CHECK FOR & ONLY ADD ENTRIES THAT ARE NOT EMPTY
@@ -136,7 +136,8 @@ const manageSummary = (function() { //IMMEDIATELY INVOKED MODULE THAT EXPOSES 'g
 	}
 })();
 
-const manageForm = (function(){ //IMMEDIATELY INVOKED MODULE THAT EXPOSES 'resetInputs'
+const manageForm = (function(){ //IMMEDIATELY INVOKED MODULE THAT EXPOSES 'inputRows', 'resetInputs' & 'checkInputs'
+	const inputRows = 6; //THIS IS THE NUMBER OF INPUT ELEMENT PAIRS IN THE FORM
 	const form = document.forms.entryForm; //GET A REFERENCE TO THE FORM
 	const select = document.getElementById('type'); //REFERENCE THE SELECT ELELMENT IN THE DOM
 	const types = { //THIS OBJECT HOLDS THE TYPES
@@ -152,6 +153,13 @@ const manageForm = (function(){ //IMMEDIATELY INVOKED MODULE THAT EXPOSES 'reset
 		form.querySelector('input.form-control').focus(); //SET FOCUS ON THE FIRST TEXT INPUT FIELD IN THE FORM
 	}
 	
+	function checkInputs() { //FOR YELLOW ENVELOPES, THE ID/NAME FIELDS SHOULD BE OF TYPE 'NUMBER'
+		let inputType = (select.value === "yellow") ? 'number' : 'text';
+		form.querySelectorAll('input.id').forEach(input => {
+			input.type = inputType;
+		});
+	}
+	
 	(function loadSelect() { //THIS ADDS THE TYPE SELECTIONS TO THE SELECT ELEMENT
 		for (let type of Object.entries(types)) {
 			const opt = document.createElement('option');
@@ -161,7 +169,7 @@ const manageForm = (function(){ //IMMEDIATELY INVOKED MODULE THAT EXPOSES 'reset
 		}
 	})();
 	(function loadInputs() { //ADDS ALL THE INPUT FIELDS TO THE FORM
-		for (let i = 0; i < 6; i++) { //THIS IS THE NUMBER OF INPUT ELEMENT PAIRS
+		for (let i = 0; i < inputRows; i++) {
 			form.appendChild(buildEntryRow(i));
 		}
 		resetInputs();
@@ -178,6 +186,7 @@ const manageForm = (function(){ //IMMEDIATELY INVOKED MODULE THAT EXPOSES 'reset
 		const inputId = document.createElement('input');
 		inputId.type = 'text';
 		inputId.classList.add("form-control");
+		inputId.classList.add("id");
 		inputId.name = i + 'number';
 		inputId.placeholder = 'Name or Number';
 		col1.appendChild(inputId);
@@ -201,9 +210,11 @@ const manageForm = (function(){ //IMMEDIATELY INVOKED MODULE THAT EXPOSES 'reset
 	}
 	
 	return {
-		resetInputs: resetInputs
+		inputRows: inputRows,
+		resetInputs: resetInputs,
+		checkInputs: checkInputs
 	};
 })();
 
 //MAIN EXECUTION STARTS HERE
-document.getElementById('pageTitle').innerHTML += ' v1.7'; //APPEND THE VERSION NUMBER TO THE PAGE TITLE
+document.getElementById('pageTitle').innerHTML += ' v1.8'; //APPEND THE VERSION NUMBER TO THE PAGE TITLE
