@@ -32,7 +32,7 @@ function recordGiving() { //GET THE ENTRY VALUES FROM THE FORM & RECORD THEM
 
 function clearEntries() {
 	if (confirm("This action will clear all the Entries & reset all Totals to zero.")) {
-		//localStorage.removeItem("giving");
+		localStorage.removeItem("giving");
 		document.location.reload();
 	}
 	else {console.log('User cancelled');}
@@ -72,7 +72,22 @@ const manageEntries = (function() { //IMMEDIATELY INVOKED MODULE THAT EXPOSES 'a
 		const table = document.getElementById(type + 'Table'); //GET REFERENCE TO THE APPLICABLE TABLE; 'TYPE' SHOULD MATCH THE FIRST PART OF THE ELEMENT ID
 		table.appendChild(buildTableRow([id, amount.toFixed(2).toLocaleString()]));
 	}
-
+	
+	function addRecord(type, id, amount) {
+		if (!id) { //CHECK FOR NO NAME/ID & ADD DEFAULT STRING IF MISSING
+			id = '<n/a>';
+		}
+		records.push(new Entry(type, id, amount)); //SAVE TO THE RECORDS ARRAY FOR THE SUMMARY REPORT
+		saveRecords();
+		manageTotal.incrementTotal(amount);
+		manageTotal.updateTotal('total'); //HAVE THE TOTAL UPDATED IN THE DOCUMENT
+		addDetails(type, id, amount); //ADD THE RECORD TO THE APPROPRIATE DETAILS SHEET
+	}
+	
+	function saveRecords() { //SAVE TO LOCALSTORAGE FOR PERSISTENCE
+		localStorage.setItem("giving", JSON.stringify(records));
+	}
+	
 	class Entry{
 		constructor(type, id, amount) {
 			this.type = type;
@@ -87,18 +102,17 @@ const manageEntries = (function() { //IMMEDIATELY INVOKED MODULE THAT EXPOSES 'a
 			return [this.id, this.amount.toFixed(2).toLocaleString()];
 		}
 	}
+
+	(function restoreRecords() { //PULL IN ANY RECORDS PREVIOUSLY SAVED TO LOCALSTORAGE
+		if (localStorage.getItem("giving")) {
+			JSON.parse(localStorage.getItem("giving")).forEach(function(entry) {
+				addRecord(entry.type, entry.id, Number(entry.amount));
+			});
+		}
+	})();
 	
 	return {
-		addRecord: function(type, id, amount) {
-			if (!id) { //CHECK FOR NO NAME/ID & ADD DEFAULT STRING IF MISSING
-				id = '<n/a>';
-			} else {
-				records.push(new Entry(type, id, amount)); //SAVE TO THE RECORDS ARRAY FOR THE SUMMARY REPORT
-			}
-			manageTotal.incrementTotal(amount);
-			manageTotal.updateTotal('total'); //HAVE THE TOTAL UPDATED IN THE DOCUMENT
-			addDetails(type, id, amount); //ADD THE RECORD TO THE APPROPRIATE DETAILS SHEET
-		}
+		addRecord: addRecord
 	}
 })();
 
@@ -217,4 +231,4 @@ const manageForm = (function(){ //IMMEDIATELY INVOKED MODULE THAT EXPOSES 'input
 })();
 
 //MAIN EXECUTION STARTS HERE
-document.getElementById('pageTitle').innerHTML += ' v1.8'; //APPEND THE VERSION NUMBER TO THE PAGE TITLE
+document.getElementById('pageTitle').innerHTML += ' v1.9'; //APPEND THE VERSION NUMBER TO THE PAGE TITLE
