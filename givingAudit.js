@@ -151,7 +151,7 @@ const manageSummary = (function() { //IMMEDIATELY INVOKED MODULE THAT EXPOSES 'g
 })();
 
 const manageForm = (function(){ //IMMEDIATELY INVOKED MODULE THAT EXPOSES 'inputRows', 'resetInputs' & 'checkInputs'
-	const inputRows = 6; //THIS IS THE NUMBER OF INPUT ELEMENT PAIRS IN THE FORM
+	const inputRows = 1; //THIS IS THE NUMBER OF INPUT ELEMENT PAIRS IN THE FORM
 	const form = document.forms.entryForm; //GET A REFERENCE TO THE FORM
 	const select = document.getElementById('type'); //REFERENCE THE SELECT ELELMENT IN THE DOM
 	const types = { //THIS OBJECT HOLDS THE TYPES
@@ -231,4 +231,4 @@ const manageForm = (function(){ //IMMEDIATELY INVOKED MODULE THAT EXPOSES 'input
 })();
 
 //MAIN EXECUTION STARTS HERE
-document.getElementById('pageTitle').innerHTML += ' v1.9'; //APPEND THE VERSION NUMBER TO THE PAGE TITLE
+document.getElementById('pageTitle').innerHTML += ' v2.0'; //APPEND THE VERSION NUMBER TO THE PAGE TITLE
