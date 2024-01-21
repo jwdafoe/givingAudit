@@ -139,9 +139,9 @@ const manageSummary = (function() { //IMMEDIATELY INVOKED MODULE THAT EXPOSES 'g
 		});
 		
 		records.forEach(record => {
-			if (record.id != '<n/a>') { //WE ONLY NEED TO SEE MATCHED ID'S
+			//if (record.id != '<n/a>') { //WE ONLY NEED TO SEE MATCHED ID'S
 				table.appendChild(buildTableRow(record.details));
-			}
+			//}
 		});
 	}
 	
@@ -231,4 +231,4 @@ const manageForm = (function(){ //IMMEDIATELY INVOKED MODULE THAT EXPOSES 'input
 })();
 
 //MAIN EXECUTION STARTS HERE
-document.getElementById('pageTitle').innerHTML += ' v2.0'; //APPEND THE VERSION NUMBER TO THE PAGE TITLE
+document.getElementById('pageTitle').innerHTML += ' v2.1'; //APPEND THE VERSION NUMBER TO THE PAGE TITLE
