@@ -80,7 +80,7 @@ const manageEntries = (function() { //IMMEDIATELY INVOKED MODULE THAT EXPOSES 'a
 		records.push(new Entry(type, id, amount)); //SAVE TO THE RECORDS ARRAY FOR THE SUMMARY REPORT
 		saveRecords();
 		manageTotal.incrementTotal(amount);
-		manageTotal.updateTotal('total'); //HAVE THE TOTAL UPDATED IN THE DOCUMENT
+		//manageTotal.updateTotal('total'); //HAVE THE TOTAL UPDATED IN THE DOCUMENT
 		addDetails(type, id, amount); //ADD THE RECORD TO THE APPROPRIATE DETAILS SHEET
 	}
 	
@@ -155,7 +155,7 @@ const manageForm = (function(){ //IMMEDIATELY INVOKED MODULE THAT EXPOSES 'input
 	const form = document.forms.entryForm; //GET A REFERENCE TO THE FORM
 	const select = document.getElementById('type'); //REFERENCE THE SELECT ELELMENT IN THE DOM
 	const types = { //THIS OBJECT HOLDS THE TYPES
-		check: 'loose checks',
+		//check: 'loose checks',
 		pink: 'pink envelopes',
 		yellow: 'yellow envelopes'
 	}
@@ -231,4 +231,4 @@ const manageForm = (function(){ //IMMEDIATELY INVOKED MODULE THAT EXPOSES 'input
 })();
 
 //MAIN EXECUTION STARTS HERE
-document.getElementById('pageTitle').innerHTML += ' v2.2'; //APPEND THE VERSION NUMBER TO THE PAGE TITLE
+document.getElementById('pageTitle').innerHTML += ' v3.0'; //APPEND THE VERSION NUMBER TO THE PAGE TITLE
