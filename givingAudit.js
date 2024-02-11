@@ -49,23 +49,12 @@ function buildTableRow(details) {
 	tdAmount.textContent = details[1];
 	tr.appendChild(tdAmount);
 	
+/*	const tdType = document.createElement('td');
+	tdType.textContent = details[2];
+	tr.appendChild(tdType);*/
+	
 	return tr;
 }
-
-const manageTotal = (function() { //IMMEDIATELY INVOKED MODULE THAT EXPOSES 'incrementTotal' & 'updateTotal'
-	let totalVal = 0; //INITIALIZE THE VARIABLE AT ZERO
-	
-	return {
-		incrementTotal: function(amount) { //ADDS 'AMOUNT' TO THE TOTAL & THEN RETURNS THE NEW VALUE
-			totalVal += amount;
-			return totalVal;
-		},
-		updateTotal: function(elementId) { //UPDATES THE REFERENCED ELEMENT WITH A FORMATED $ TOTAL
-			const total = document.getElementById(elementId);
-			total.textContent = `Total:  $ ${totalVal.toLocaleString()}`;
-		}
-	};
-})();
 
 const manageEntries = (function() { //IMMEDIATELY INVOKED MODULE THAT EXPOSES 'addRecord'
 	function addDetails(type, id, amount) { //THIS ADDS RECORDS TO THE DETAILS SHEET
@@ -79,8 +68,6 @@ const manageEntries = (function() { //IMMEDIATELY INVOKED MODULE THAT EXPOSES 'a
 		}
 		records.push(new Entry(type, id, amount)); //SAVE TO THE RECORDS ARRAY FOR THE SUMMARY REPORT
 		saveRecords();
-		manageTotal.incrementTotal(amount);
-		//manageTotal.updateTotal('total'); //HAVE THE TOTAL UPDATED IN THE DOCUMENT
 		addDetails(type, id, amount); //ADD THE RECORD TO THE APPROPRIATE DETAILS SHEET
 	}
 	
@@ -126,8 +113,10 @@ const manageSummary = (function() { //IMMEDIATELY INVOKED MODULE THAT EXPOSES 'g
 			table.removeChild(table.firstChild);
 		}
 		records.sort((a, b) => {
-			const idA = a.id.toUpperCase();
-			const idB = b.id.toUpperCase();
+			const idA = a.type;
+			const idB = b.type;
+			//const idA = a.id.toUpperCase();
+			//const idB = b.id.toUpperCase();
 			if (idA < idB) {
 				return -1;
 			}
@@ -231,4 +220,4 @@ const manageForm = (function(){ //IMMEDIATELY INVOKED MODULE THAT EXPOSES 'input
 })();
 
 //MAIN EXECUTION STARTS HERE
-document.getElementById('pageTitle').innerHTML += ' v3.0'; //APPEND THE VERSION NUMBER TO THE PAGE TITLE
+document.getElementById('pageTitle').innerHTML += ' v3.1'; //APPEND THE VERSION NUMBER TO THE PAGE TITLE
