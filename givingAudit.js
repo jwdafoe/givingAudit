@@ -175,6 +175,14 @@ const manageForm = (function(){ //IMMEDIATELY INVOKED MODULE THAT EXPOSES 'input
 		for (let i = 0; i < inputRows; i++) {
 			form.appendChild(buildEntryRow(i));
 		}
+		//NOW ADD THE SUBMIT BUTTON TO THE FORM AFTER THE INPUTS
+		const addBtn = document.createElement('input');
+		addBtn.classList.add("btn");
+		addBtn.classList.add("btn-primary");
+		addBtn.type = 'submit';
+		addBtn.value = "Add";
+		form.appendChild(addBtn);
+		
 		resetInputs();
 	})();
 			
@@ -220,4 +228,4 @@ const manageForm = (function(){ //IMMEDIATELY INVOKED MODULE THAT EXPOSES 'input
 })();
 
 //MAIN EXECUTION STARTS HERE
-document.getElementById('pageTitle').innerHTML += ' v3.1'; //APPEND THE VERSION NUMBER TO THE PAGE TITLE
+document.getElementById('pageTitle').innerHTML += ' v3.2'; //APPEND THE VERSION NUMBER TO THE PAGE TITLE

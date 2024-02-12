@@ -13,17 +13,20 @@
 
 	<body>
 		<div class="container">
-			<h1 id="pageTitle">GivingAudit </h1>
-			
+			<h2 id="pageTitle">GivingAudit </h2>
 			<form id="entryForm" action="javascript:void (0);">
 				<div class="row mb-3">
 					<div class="col">
-						<select class="form-select" id="type" name="type" title="Record Type"></select>
+						<label for="forWeek" class="form-label">Batch date:</label>
+						<input class="form-select" type="date" id="forWeek" name="week" placeholder="batch date" />
 					</div>
 					<div class="col">
-						<input type="submit" value="Add" class="btn btn-primary">
-						<!--<input type="reset" value="Reset" class="btn btn-secondary">-->
+						<label for="type" class="form-label">Type:</label>
+						<select class="form-select" id="type" name="type" title="Record Type"></select>
 					</div>
+<!--					<div class="col">
+						<input type="submit" value="Add" class="btn btn-primary">
+					</div>-->
 				</div>
 				
 			</form>
@@ -33,21 +36,21 @@
 			<div class="container" id="detailsDiv">
 				<div class="row">
 					<div class="col">
-						<h3>Audit Tasks</h3>
+						<h4>Audit Tasks</h4>
 						<div class="form-check">
 							<input class="form-check-input" type="checkbox" value="" id="envelopesEmpty">
 							<label class="form-check-label" for="envelopesEmpty">Confirm all envelopes are empty</label>
 						</div>
 						<div class="form-check">
 							<input class="form-check-input" type="checkbox" value="" id="envelopeDetails">
-							<label class="form-check-label" for="envelopeDetails">Enter all envelope details</label>
+							<label class="form-check-label" for="envelopeDetails">Enter envelope details below</label>
 						</div>
 						<div class="form-check">
-							<input class="form-check-input" type="checkbox" value="" id="sendAudit">
-							<label class="form-check-label" for="sendAudite"><a href="mailto:jwdafoe@gmail.com?subject=LVBC giving audit &body=summary goes here.">Submit (email) audit details</a></label>
+							<input class="form-check-input" type="checkbox" value="" id="sendAudit" disabled>
+							<label class="form-check-label" for="sendAudite"><a href="mailto:jwdafoe@gmail.com?subject=LVBC giving audit &body=summary goes here.">Click here to email audit details</a></label>
 						</div>
 					</div>
-					<div class="col-3">
+					<div class="col">
 						<button type="button" id="clearBtn" class="btn btn-danger">Clear all</button>
 					</div>
 					
@@ -70,12 +73,12 @@
 						</table>
 					</div> -->
 					<div class="col text-bg-danger" style="--bs-bg-opacity: .5;">
-						<h4>Pink Envs</h4>
+<!--						<h4>Pink Envs</h4>-->
 						<ul class="list-group" id="pinkSheet"></ul>
 						<table class="table table-sm">
 							<thead>
 								<tr>
-									<th>ID or Name</th>
+									<th>ID/Name</th>
 									<th class="text-end">Amount</th>
 								</tr>
 							</thead>
@@ -84,12 +87,12 @@
 						</table>
 					</div>
 					<div class="col text-bg-warning" style="--bs-bg-opacity: .5;">
-						<h4>Yellow Envs</h4>
+<!--						<h4>Yellow Envs</h4>-->
 						<ul class="list-group" id="yellowSheet"></ul>
 						<table class="table table-sm">
 							<thead>
 								<tr>
-									<th>ID or Name</th>
+									<th>ID #</th>
 									<th class="text-end">Amount</th>
 								</tr>
 							</thead>
