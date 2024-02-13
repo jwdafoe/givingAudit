@@ -150,10 +150,10 @@ const manageForm = (function(){ //IMMEDIATELY INVOKED MODULE THAT EXPOSES 'input
 	}
 	
 	function resetInputs() {
-		form.querySelectorAll('input.form-control').forEach(input => {
+		form.querySelectorAll('input.resetThis').forEach(input => {
 			input.value = '';
 		});
-		form.querySelector('input.form-control').focus(); //SET FOCUS ON THE FIRST TEXT INPUT FIELD IN THE FORM
+		form.querySelector('input.resetThis').focus(); //SET FOCUS ON THE FIRST TEXT INPUT FIELD IN THE FORM
 	}
 	
 	function checkInputs() { //FOR YELLOW ENVELOPES, THE ID/NAME FIELDS SHOULD BE OF TYPE 'NUMBER'
@@ -198,6 +198,7 @@ const manageForm = (function(){ //IMMEDIATELY INVOKED MODULE THAT EXPOSES 'input
 		inputId.type = 'text';
 		inputId.classList.add("form-control");
 		inputId.classList.add("id");
+		inputId.classList.add("resetThis");
 		inputId.name = i + 'number';
 		inputId.placeholder = 'Name or Number';
 		col1.appendChild(inputId);
@@ -210,6 +211,7 @@ const manageForm = (function(){ //IMMEDIATELY INVOKED MODULE THAT EXPOSES 'input
 		const inputAmount = document.createElement('input');
 		inputAmount.type = 'number';
 		inputAmount.classList.add("form-control");
+		inputAmount.classList.add("resetThis");
 		inputAmount.name = i + 'amount';
 		inputAmount.step = 'any';
 		inputAmount.placeholder = 'Amount 0.00';
