@@ -12,6 +12,12 @@ $(document).ready(function() {
 			manageSummary.show();
 		}
 	});
+	$("#envelopesEmpty, #envelopeDetails").on("change", function() {
+		if ($(".form-check-input:checked").length == 2) {
+			$("#sendAudit").prop("disabled", false);
+			$("#sendIt").prop("href", "mailto:jwdafoe@gmail.com?subject=LVBC giving audit &body=summary goes here.");
+		}
+	});
 });
 
 //DECLARE GLOBAL VARIABLES IN THIS SECTION
@@ -230,4 +236,4 @@ const manageForm = (function(){ //IMMEDIATELY INVOKED MODULE THAT EXPOSES 'input
 })();
 
 //MAIN EXECUTION STARTS HERE
-document.getElementById('pageTitle').innerHTML += ' v3.2'; //APPEND THE VERSION NUMBER TO THE PAGE TITLE
+document.getElementById('pageTitle').innerHTML += ' v3.3'; //APPEND THE VERSION NUMBER TO THE PAGE TITLE
