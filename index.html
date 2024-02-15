@@ -13,7 +13,7 @@
 
 	<body>
 		<div class="container">
-			<h2 id="pageTitle">GivingAudit </h2>
+			<h2 class="text-end" id="pageTitle">GivingAudit </h2>
 			<div class="row">
 				<div class="col">
 					<h4>Audit Tasks</h4>
@@ -29,30 +29,32 @@
 						<input class="form-check-input" type="checkbox" value="" id="sendAudit" disabled>
 						<label class="form-check-label" for="sendAudit"><a href="#" id="sendIt">Click here to email audit details</a></label>
 					</div>
+					<div class="form-check">
+						<input class="form-check-input" type="checkbox" value="" id="envelopesFile" disabled>
+						<label class="form-check-label" for="envelopesFile">Place envelopes in box (next to safe)</label>
+					</div>
 				</div>
 				
 			</div>
 			<hr>
-			<form id="entryForm" action="javascript:void (0);">
-				<div class="row mb-3">
-					<div class="col">
-						<label for="forWeek" class="form-label">Batch date:</label>
-						<input class="form-control" type="date" id="forWeek" name="week" placeholder="batch date" />
-					</div>
-					<div class="col">
-						<label for="type" class="form-label">Type:</label>
-						<select class="form-select" id="type" name="type" title="Record Type"></select>
-					</div>
-<!--					<div class="col">
-						<input type="submit" value="Add" class="btn btn-primary">
-					</div>-->
-				</div>
-				
-			</form>
-			
-			<hr>
 
 			<div class="container" id="detailsDiv">
+				<form id="entryForm" action="javascript:void (0);">
+					<div class="row mb-3">
+						<div class="col">
+							<label for="batchDate" class="form-label">Batch date:</label>
+							<input class="form-control" type="date" id="batchDate" name="batchDate" required/>
+						</div>
+						<div class="col">
+							<label for="type" class="form-label">Type:</label>
+							<select class="form-select" id="type" name="type" title="Record Type"></select>
+						</div>
+	<!--					<div class="col">
+							<input type="submit" value="Add" class="btn btn-primary">
+						</div>-->
+					</div>
+				</form>
+				<hr>
 				<div class="row">
 <!--					<div class="col text-bg-info" style="--bs-bg-opacity: .5;">
 						<h4>Loose Checks</h4>

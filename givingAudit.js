@@ -12,10 +12,10 @@ $(document).ready(function() {
 			manageSummary.show();
 		}
 	});
-	$("#envelopesEmpty, #envelopeDetails").on("change", function() {
-		if ($(".form-check-input:checked").length == 2) {
-			$("#sendAudit").prop("disabled", false);
-			$("#sendIt").prop("href", "mailto:jwdafoe@gmail.com?subject=LVBC giving audit &body=summary goes here.");
+	$(".form-check-input").on("change", function() { //LISTEN FOR CHANGES TO TASK CHECKBOXES
+		if ($(".form-check-input:checked").length == 2) { //ONLY ENABLE THE FINAL TASKs IF THE FIRST TWO ARE COMPLETE
+			$("#sendAudit, #envelopesFile").prop("disabled", false);
+			$("#sendIt").prop("href", `mailto:jwdafoe@gmail.com?subject=${manageForm.batchDate.value} LVBC giving audit &body=summary goes here.${$("#summaryTable")}`);
 		}
 	});
 });
@@ -145,9 +145,10 @@ const manageSummary = (function() { //IMMEDIATELY INVOKED MODULE THAT EXPOSES 'g
 	}
 })();
 
-const manageForm = (function(){ //IMMEDIATELY INVOKED MODULE THAT EXPOSES 'inputRows', 'resetInputs' & 'checkInputs'
+const manageForm = (function(){ //IMMEDIATELY INVOKED MODULE THAT EXPOSES 'inputRows', 'batchDate', 'resetInputs' & 'checkInputs'
 	const inputRows = 1; //THIS IS THE NUMBER OF INPUT ELEMENT PAIRS IN THE FORM
 	const form = document.forms.entryForm; //GET A REFERENCE TO THE FORM
+	const date = document.getElementById('batchDate'); //REFERENCE THE DATE INPUT ELEMENT IN THE DOM
 	const select = document.getElementById('type'); //REFERENCE THE SELECT ELELMENT IN THE DOM
 	const types = { //THIS OBJECT HOLDS THE TYPES
 		//check: 'loose checks',
@@ -221,6 +222,7 @@ const manageForm = (function(){ //IMMEDIATELY INVOKED MODULE THAT EXPOSES 'input
 		inputAmount.name = i + 'amount';
 		inputAmount.step = 'any';
 		inputAmount.placeholder = 'Amount 0.00';
+		inputAmount.required = true;
 		col2.appendChild(inputAmount);
 		
 		row.appendChild(col2);
@@ -230,6 +232,7 @@ const manageForm = (function(){ //IMMEDIATELY INVOKED MODULE THAT EXPOSES 'input
 	
 	return {
 		inputRows: inputRows,
+		batchDate: date,
 		resetInputs: resetInputs,
 		checkInputs: checkInputs
 	};
