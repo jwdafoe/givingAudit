@@ -5,23 +5,25 @@ $(document).ready(function() {
 	$("#entryForm").on("submit", recordGiving);
 	$("#clearBtn").on("click", clearEntries);
 	$("#type").on("change", manageForm.checkInputs); //LISTEN FOR CHANGES TO THE SELECT ELEMENT
-	$("#summaryBtn, #hideBtn").on("click", function(e) {
+/*	$("#summaryBtn, #hideBtn").on("click", function(e) {
 		$("#detailsDiv").slideToggle();
 		$("#summaryDiv").slideToggle();
 		if (this.id == 'summaryBtn') { //ONLY UPDATE THE SUMMARY WHEN SUMMARY BUTTON IS CLICKED
 			manageSummary.show();
 		}
-	});
+	});*/
 	$(".form-check-input").on("change", function() { //LISTEN FOR CHANGES TO TASK CHECKBOXES
 		if ($(".form-check-input:checked").length == 2) { //ONLY ENABLE THE FINAL TASKs IF THE FIRST TWO ARE COMPLETE
 			$("#sendAudit, #envelopesFile").prop("disabled", false);
-			$("#sendIt").prop("href", `mailto:jwdafoe@gmail.com?subject=${manageForm.batchDate.value} LVBC giving audit &body=summary goes here.${$("#summaryTable")}`);
+			manageSummary.show();
+			$("#sendIt").prop("href", `mailto:jwdafoe@gmail.com?subject=${encodeURIComponent(manageForm.batchDate.value)} LVBC giving audit &body=Envelope summary: ${encodeURIComponent(finalRecords)}`);
 		}
 	});
 });
 
 //DECLARE GLOBAL VARIABLES IN THIS SECTION
 const records = new Array(); //INITIALIZE AN ARRAY TO HOLD THE GIVING RECORDS
+var finalRecords = new String(); //INITIALIZE A STRING VARIABLE TO USE IN SENDING THE RECORDS LATER
 
 //DEFINE PRIMARY FUNCTIONS IN THIS SECTION
 function recordGiving() { //GET THE ENTRY VALUES FROM THE FORM & RECORD THEM
@@ -134,10 +136,11 @@ const manageSummary = (function() { //IMMEDIATELY INVOKED MODULE THAT EXPOSES 'g
 		});
 		
 		records.forEach(record => {
-			//if (record.id != '<n/a>') { //WE ONLY NEED TO SEE MATCHED ID'S
-				table.appendChild(buildTableRow(record.details));
-			//}
+			table.appendChild(buildTableRow(record.details));
+			finalRecords += '\n' + record.details[0] + '\t' + record.details[1];
 		});
+		finalRecords += '\n\n'; //ADD TWO BLANK LINES AFTER THE SUMMARY FOR FORMATTING PURPOSES
+		//mail = `mailto:jwdafoe@gmail.com?subject=${encodeURIComponent(manageForm.batchDate.value)} LVBC giving audit &body=Envelope summary: ${encodeURIComponent(finalRecords)}`
 	}
 	
 	return {
@@ -182,6 +185,8 @@ const manageForm = (function(){ //IMMEDIATELY INVOKED MODULE THAT EXPOSES 'input
 		for (let i = 0; i < inputRows; i++) {
 			form.appendChild(buildEntryRow(i));
 		}
+		//SET THE 'REQUIRED' FLAG ON THE FIRST AMOUNT INPUT FIELD ONLY
+		document.getElementsByName('0amount')[0].required = true;
 		//NOW ADD THE SUBMIT BUTTON TO THE FORM AFTER THE INPUTS
 		const addBtn = document.createElement('input');
 		addBtn.classList.add("btn");
@@ -222,7 +227,7 @@ const manageForm = (function(){ //IMMEDIATELY INVOKED MODULE THAT EXPOSES 'input
 		inputAmount.name = i + 'amount';
 		inputAmount.step = 'any';
 		inputAmount.placeholder = 'Amount 0.00';
-		inputAmount.required = true;
+		//inputAmount.required = true;
 		col2.appendChild(inputAmount);
 		
 		row.appendChild(col2);
@@ -239,4 +244,4 @@ const manageForm = (function(){ //IMMEDIATELY INVOKED MODULE THAT EXPOSES 'input
 })();
 
 //MAIN EXECUTION STARTS HERE
-document.getElementById('pageTitle').innerHTML += ' v3.3'; //APPEND THE VERSION NUMBER TO THE PAGE TITLE
+document.getElementById('pageTitle').innerHTML += ' v3.5'; //APPEND THE VERSION NUMBER TO THE PAGE TITLE
