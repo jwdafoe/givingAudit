@@ -137,7 +137,7 @@ const manageSummary = (function() { //IMMEDIATELY INVOKED MODULE THAT EXPOSES 'g
 		
 		records.forEach(record => {
 			table.appendChild(buildTableRow(record.details));
-			finalRecords += '\n' + record.details[0] + '\t' + record.details[1];
+			finalRecords += '\n' + record.details[0] + ',' + record.details[1];
 		});
 		finalRecords += '\n\n'; //ADD TWO BLANK LINES AFTER THE SUMMARY FOR FORMATTING PURPOSES
 		//mail = `mailto:jwdafoe@gmail.com?subject=${encodeURIComponent(manageForm.batchDate.value)} LVBC giving audit &body=Envelope summary: ${encodeURIComponent(finalRecords)}`
@@ -244,4 +244,4 @@ const manageForm = (function(){ //IMMEDIATELY INVOKED MODULE THAT EXPOSES 'input
 })();
 
 //MAIN EXECUTION STARTS HERE
-document.getElementById('pageTitle').innerHTML += ' v3.5'; //APPEND THE VERSION NUMBER TO THE PAGE TITLE
+document.getElementById('pageTitle').innerHTML += ' v3.6'; //APPEND THE VERSION NUMBER TO THE PAGE TITLE
