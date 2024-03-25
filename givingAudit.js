@@ -94,7 +94,7 @@ const manageEntries = (function() { //IMMEDIATELY INVOKED MODULE THAT EXPOSES 'a
 		}
 		get details() {
 			//return `${this.id}: $ ${this.amount.toFixed(2).toLocaleString()}`;
-			return [this.id, this.amount.toFixed(2).toLocaleString()];
+			return [this.type, this.id, this.amount.toFixed(2).toLocaleString()];
 		}
 	}
 
@@ -137,7 +137,7 @@ const manageSummary = (function() { //IMMEDIATELY INVOKED MODULE THAT EXPOSES 'g
 		
 		records.forEach(record => {
 			table.appendChild(buildTableRow(record.details));
-			finalRecords += '\n' + record.details[0] + ';' + record.details[1];
+			finalRecords += '\n' + record.details[0] + ';' + record.details[1] + ';' + record.details[2];
 		});
 		finalRecords += '\n\n'; //ADD TWO BLANK LINES AFTER THE SUMMARY FOR FORMATTING PURPOSES
 		//mail = `mailto:jwdafoe@gmail.com?subject=${encodeURIComponent(manageForm.batchDate.value)} LVBC giving audit &body=Envelope summary: ${encodeURIComponent(finalRecords)}`
