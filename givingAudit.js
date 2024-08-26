@@ -5,25 +5,10 @@ $(document).ready(function() {
 	$("#entryForm").on("submit", recordGiving);
 	$("#clearBtn").on("click", clearEntries);
 	$("#type").on("change", manageForm.checkInputs); //LISTEN FOR CHANGES TO THE SELECT ELEMENT
-/*	$("#summaryBtn, #hideBtn").on("click", function(e) {
-		$("#detailsDiv").slideToggle();
-		$("#summaryDiv").slideToggle();
-		if (this.id == 'summaryBtn') { //ONLY UPDATE THE SUMMARY WHEN SUMMARY BUTTON IS CLICKED
-			manageSummary.show();
-		}
-	});*/
-/*	$(".form-check-input").on("change", function() { //LISTEN FOR CHANGES TO TASK CHECKBOXES
-		if ($(".form-check-input:checked").length == 2) { //ONLY ENABLE THE FINAL TASKs IF THE FIRST TWO ARE COMPLETE
-			$("#sendAudit, #envelopesFile").prop("disabled", false);
-			manageSummary.show();
-			$("#sendIt").prop("href", `mailto:jwdafoe@gmail.com?subject=${encodeURIComponent(manageForm.batchDate.value)} LVBC giving audit &body=Envelope summary: ${encodeURIComponent(finalRecords)}`);
-		}
-	});*/
 });
 
 //DECLARE GLOBAL VARIABLES IN THIS SECTION
 const records = new Array(); //INITIALIZE AN ARRAY TO HOLD THE GIVING RECORDS
-var finalRecords = new String(); //INITIALIZE A STRING VARIABLE TO USE IN SENDING THE RECORDS LATER
 
 //DEFINE PRIMARY FUNCTIONS IN THIS SECTION
 function recordGiving() { //GET THE ENTRY VALUES FROM THE FORM & RECORD THEM
@@ -119,50 +104,13 @@ const manageEntries = (function() { //IMMEDIATELY INVOKED MODULE THAT EXPOSES 'a
 	}
 })();
 
-/*const manageSummary = (function() { //IMMEDIATELY INVOKED MODULE THAT EXPOSES 'getSummary'
-	(function hide() {
-		document.getElementById('summaryDiv').style.display = 'none';
-	})();
-	function getSummary() { //SORTS ALL ENTRIES BY NAME OR GIVING NUMBER
-		const table = document.getElementById('summaryTable');
-		while (table.firstChild) { //CLEAR OUT ANY EXISTING RECORDS IN THE SUMMARY ELEMENT
-			table.removeChild(table.firstChild);
-		}
-		records.sort((a, b) => {
-			const idA = a.type;
-			const idB = b.type;
-			//const idA = a.id.toUpperCase();
-			//const idB = b.id.toUpperCase();
-			if (idA < idB) {
-				return -1;
-			}
-			if (idA > idB) {
-				return 1;
-			}
-			
-			return 0;
-		});
-		
-		records.forEach(record => {
-			table.appendChild(buildTableRow(record.details));
-			finalRecords += '\n' + record.details[0] + ';' + record.details[1] + ';' + record.details[2];
-		});
-		finalRecords += '\n\n'; //ADD TWO BLANK LINES AFTER THE SUMMARY FOR FORMATTING PURPOSES
-		//mail = `mailto:jwdafoe@gmail.com?subject=${encodeURIComponent(manageForm.batchDate.value)} LVBC giving audit &body=Envelope summary: ${encodeURIComponent(finalRecords)}`
-	}
-	
-	return {
-		show: getSummary
-	}
-})();*/
-
 const manageForm = (function(){ //IMMEDIATELY INVOKED MODULE THAT EXPOSES 'inputRows', 'batchDate', 'resetInputs' & 'checkInputs'
 	const inputRows = 1; //THIS IS THE NUMBER OF INPUT ELEMENT PAIRS IN THE FORM
 	const form = document.forms.entryForm; //GET A REFERENCE TO THE FORM
 	const date = document.getElementById('batchDate'); //REFERENCE THE DATE INPUT ELEMENT IN THE DOM
 	const select = document.getElementById('type'); //REFERENCE THE SELECT ELELMENT IN THE DOM
 	const types = { //THIS OBJECT HOLDS THE TYPES
-		//check: 'loose checks',
+		check: 'loose checks',
 		pink: 'pink envelopes',
 		yellow: 'yellow envelopes'
 	}
@@ -252,4 +200,4 @@ const manageForm = (function(){ //IMMEDIATELY INVOKED MODULE THAT EXPOSES 'input
 })();
 
 //MAIN EXECUTION STARTS HERE
-document.getElementById('pageTitle').innerHTML += ' v3.8'; //APPEND THE VERSION NUMBER TO THE PAGE TITLE
+document.getElementById('pageTitle').innerHTML += ' v3.9'; //APPEND THE VERSION NUMBER TO THE PAGE TITLE

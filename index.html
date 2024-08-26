@@ -27,7 +27,7 @@
 					</div>
 					<div class="form-check">
 						<input class="form-check-input" type="checkbox" value="" id="sendAudit">
-						<label class="form-check-label" for="sendAudit">Transfer records to audit file</label>
+						<label class="form-check-label" for="sendAudit">Copy Summary to audit file</label>
 					</div>
 					<div class="form-check">
 						<input class="form-check-input" type="checkbox" value="" id="envelopesFile">
@@ -58,13 +58,13 @@
 			<div class="row">
 				<div class="col">
 					<h4>Summary</h4>
-					<ul class="list-group" id="summarySheet"></ul>
-					<table class="table table-sm">
-						<thead>
+<!--					<ul class="list-group" id="summarySheet"></ul>-->
+					<table class="table table-sm table-striped">
+						<thead class="thead-light">
 							<tr>
 								<th>Date</th>
 								<th>Type</th>
-								<th>ID / Name</th>
+								<th>ID/Name</th>
 								<th class="text-end">Amount</th>
 							</tr>
 						</thead>
@@ -73,66 +73,6 @@
 					</table>
 					<button type="button" id="clearBtn" class="btn btn-danger float-end">Clear all</button>
 				</div>
-<!--					<div class="col text-bg-info" style="--bs-bg-opacity: .5;">
-					<h4>Loose Checks</h4>
-					<ul class="list-group" id="checkSheet"></ul>
-					<table class="table table-sm">
-						<thead>
-							<tr>
-								<th>ID or Name</th>
-								<th class="text-end">Amount</th>
-							</tr>
-						</thead>
-						<tbody id="checkTable">
-						</tbody>
-					</table>
-				</div>
-				<div class="col text-bg-danger" style="--bs-bg-opacity: .5;">
-						<h4>Pink Envs</h4>
-					<ul class="list-group" id="pinkSheet"></ul>
-					<table class="table table-sm">
-						<thead>
-							<tr>
-								<th>ID/Name</th>
-								<th class="text-end">Amount</th>
-							</tr>
-						</thead>
-						<tbody id="pinkTable">
-						</tbody>
-					</table>
-				</div>
-				<div class="col text-bg-warning" style="--bs-bg-opacity: .5;">
-						<h4>Yellow Envs</h4>
-					<ul class="list-group" id="yellowSheet"></ul>
-					<table class="table table-sm">
-						<thead>
-							<tr>
-								<th>ID #</th>
-								<th class="text-end">Amount</th>
-							</tr>
-						</thead>
-						<tbody id="yellowTable">
-						</tbody>
-					</table>
-				</div>
-			</div>
-			<br>
-
-		</div>
-		<div class="container" id="summaryDiv">
-			<h2>Summary</h2>
-			<a href="#" id="hideBtn">back</a> 
-			<table class="table table-sm">
-				<thead>
-					<tr>
-						<th>ID or Name</th>
-						<th class="text-end">Amount</th>
-					</tr>
-				</thead>
-				<tbody id="summaryTable">
-				</tbody>
-			</table>
-				<a href="https://docs.google.com/spreadsheets/d/1uNi8Oys06R6kFpzOadpxURRzkEzm0xQ6cLFn9pTP2eY/edit?usp=drive_link" target="_blank">Open sheet</a>-->
 		</div>
 			
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
