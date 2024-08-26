@@ -12,13 +12,13 @@ $(document).ready(function() {
 			manageSummary.show();
 		}
 	});*/
-	$(".form-check-input").on("change", function() { //LISTEN FOR CHANGES TO TASK CHECKBOXES
+/*	$(".form-check-input").on("change", function() { //LISTEN FOR CHANGES TO TASK CHECKBOXES
 		if ($(".form-check-input:checked").length == 2) { //ONLY ENABLE THE FINAL TASKs IF THE FIRST TWO ARE COMPLETE
 			$("#sendAudit, #envelopesFile").prop("disabled", false);
 			manageSummary.show();
 			$("#sendIt").prop("href", `mailto:jwdafoe@gmail.com?subject=${encodeURIComponent(manageForm.batchDate.value)} LVBC giving audit &body=Envelope summary: ${encodeURIComponent(finalRecords)}`);
 		}
-	});
+	});*/
 });
 
 //DECLARE GLOBAL VARIABLES IN THIS SECTION
@@ -28,11 +28,12 @@ var finalRecords = new String(); //INITIALIZE A STRING VARIABLE TO USE IN SENDIN
 //DEFINE PRIMARY FUNCTIONS IN THIS SECTION
 function recordGiving() { //GET THE ENTRY VALUES FROM THE FORM & RECORD THEM
 	const type = document.forms.entryForm.type.value;
+	const batchDate = document.forms.entryForm.batchDate.value;
 	for (let i = 0; i < manageForm.inputRows; i++) {
 		const id = document.forms.entryForm[i + 'number'].value;
 		const amount = document.forms.entryForm[i + 'amount'].value;
 		if (amount) { //CHECK FOR & ONLY ADD ENTRIES THAT ARE NOT EMPTY
-			manageEntries.addRecord(type, id, Number(amount));
+			manageEntries.addRecord(type, id, Number(amount), batchDate);
 		}
 	}
 	manageForm.resetInputs();
@@ -48,35 +49,41 @@ function clearEntries() {
 
 function buildTableRow(details) {
 	const tr = document.createElement('tr');
+
+	const tdDate = document.createElement('td');
+	tdDate.textContent = details.batchDate;
+	tr.appendChild(tdDate);
+	
+	const tdType = document.createElement('td');
+	tdType.textContent = details.type;
+	tr.appendChild(tdType);
+
 	const tdId = document.createElement('td');
-	tdId.textContent = details[0];
+	tdId.textContent = details.id;
 	tr.appendChild(tdId);
 	
 	const tdAmount = document.createElement('td');
 	tdAmount.classList.add('text-end');
-	tdAmount.textContent = details[1];
+	tdAmount.textContent = details.amount;
 	tr.appendChild(tdAmount);
-	
-/*	const tdType = document.createElement('td');
-	tdType.textContent = details[2];
-	tr.appendChild(tdType);*/
 	
 	return tr;
 }
 
 const manageEntries = (function() { //IMMEDIATELY INVOKED MODULE THAT EXPOSES 'addRecord'
-	function addDetails(type, id, amount) { //THIS ADDS RECORDS TO THE DETAILS SHEET
-		const table = document.getElementById(type + 'Table'); //GET REFERENCE TO THE APPLICABLE TABLE; 'TYPE' SHOULD MATCH THE FIRST PART OF THE ELEMENT ID
-		table.appendChild(buildTableRow([id, amount.toFixed(2).toLocaleString()]));
+	function addDetails(type, id, amount, batchDate) { //THIS ADDS RECORDS TO THE DETAILS SHEET
+		//const table = document.getElementById(type + 'Table'); //GET REFERENCE TO THE APPLICABLE TABLE; 'TYPE' SHOULD MATCH THE FIRST PART OF THE ELEMENT ID
+		const table = document.getElementById('summaryTable'); //GET REFERENCE TO THE SUMMARY TABLE
+		table.appendChild(buildTableRow({type: type, id: id, amount: amount.toFixed(2).toLocaleString(), batchDate: batchDate}));
 	}
 	
-	function addRecord(type, id, amount) {
+	function addRecord(type, id, amount, batchDate) {
 		if (!id) { //CHECK FOR NO NAME/ID & ADD DEFAULT STRING IF MISSING
 			id = '<n/a>';
 		}
-		records.push(new Entry(type, id, amount)); //SAVE TO THE RECORDS ARRAY FOR THE SUMMARY REPORT
+		records.push(new Entry(type, id, amount, batchDate)); //SAVE TO THE RECORDS ARRAY FOR THE SUMMARY REPORT
 		saveRecords();
-		addDetails(type, id, amount); //ADD THE RECORD TO THE APPROPRIATE DETAILS SHEET
+		addDetails(type, id, amount, batchDate); //ADD THE RECORD TO THE APPROPRIATE DETAILS SHEET
 	}
 	
 	function saveRecords() { //SAVE TO LOCALSTORAGE FOR PERSISTENCE
@@ -84,24 +91,25 @@ const manageEntries = (function() { //IMMEDIATELY INVOKED MODULE THAT EXPOSES 'a
 	}
 	
 	class Entry{
-		constructor(type, id, amount) {
+		constructor(type, id, amount, batchDate) {
 			this.type = type;
 			while (id.length < 3) { //ID NUMBERS MUST BE 3 DIGITS, SO PAD ZEROS FOR ANYTHING LESS THAN 100
 				id = '0' + id;
 			}
 			this.id = id;
 			this.amount = amount;
+			this.batchDate = batchDate;
 		}
 		get details() {
 			//return `${this.id}: $ ${this.amount.toFixed(2).toLocaleString()}`;
-			return [this.type, this.id, this.amount.toFixed(2).toLocaleString()];
+			return [this.type, this.id, this.amount.toFixed(2).toLocaleString(), this.batchDate];
 		}
 	}
 
 	(function restoreRecords() { //PULL IN ANY RECORDS PREVIOUSLY SAVED TO LOCALSTORAGE
 		if (localStorage.getItem("giving")) {
 			JSON.parse(localStorage.getItem("giving")).forEach(function(entry) {
-				addRecord(entry.type, entry.id, Number(entry.amount));
+				addRecord(entry.type, entry.id, Number(entry.amount), entry.batchDate);
 			});
 		}
 	})();
@@ -111,7 +119,7 @@ const manageEntries = (function() { //IMMEDIATELY INVOKED MODULE THAT EXPOSES 'a
 	}
 })();
 
-const manageSummary = (function() { //IMMEDIATELY INVOKED MODULE THAT EXPOSES 'getSummary'
+/*const manageSummary = (function() { //IMMEDIATELY INVOKED MODULE THAT EXPOSES 'getSummary'
 	(function hide() {
 		document.getElementById('summaryDiv').style.display = 'none';
 	})();
@@ -146,7 +154,7 @@ const manageSummary = (function() { //IMMEDIATELY INVOKED MODULE THAT EXPOSES 'g
 	return {
 		show: getSummary
 	}
-})();
+})();*/
 
 const manageForm = (function(){ //IMMEDIATELY INVOKED MODULE THAT EXPOSES 'inputRows', 'batchDate', 'resetInputs' & 'checkInputs'
 	const inputRows = 1; //THIS IS THE NUMBER OF INPUT ELEMENT PAIRS IN THE FORM
@@ -244,4 +252,4 @@ const manageForm = (function(){ //IMMEDIATELY INVOKED MODULE THAT EXPOSES 'input
 })();
 
 //MAIN EXECUTION STARTS HERE
-document.getElementById('pageTitle').innerHTML += ' v3.7'; //APPEND THE VERSION NUMBER TO THE PAGE TITLE
+document.getElementById('pageTitle').innerHTML += ' v3.8'; //APPEND THE VERSION NUMBER TO THE PAGE TITLE
