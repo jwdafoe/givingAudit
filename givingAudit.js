@@ -5,6 +5,7 @@ $(document).ready(function() {
 	$("#entryForm").on("submit", recordGiving);
 	$("#clearBtn").on("click", clearEntries);
 	$("#type").on("change", manageForm.checkInputs); //LISTEN FOR CHANGES TO THE SELECT ELEMENT
+	$("#copyBtn").on("click", copyEntries);
 });
 
 //DECLARE GLOBAL VARIABLES IN THIS SECTION
@@ -30,6 +31,20 @@ function clearEntries() {
 		document.location.reload();
 	}
 	else {console.log('User cancelled');}
+}
+
+function copyEntries() {
+	const table = document.getElementById('summaryTable'); //GET REFERENCE TO THE SUMMARY TABLE
+	let tsv = '';
+	for (let row of table.rows) {
+		let cells = Array.from(row.cells).map(cell => cell.innerText);
+		tsv += cells.join('\t') + '\n';
+	}
+	navigator.clipboard.writeText(tsv).then(() => {
+		alert('Table copied to clipboard as TSV!');
+	}).catch(err => {
+		console.error('Failed to copy: ', err);
+	});
 }
 
 function buildTableRow(details) {
@@ -200,4 +215,4 @@ const manageForm = (function(){ //IMMEDIATELY INVOKED MODULE THAT EXPOSES 'input
 })();
 
 //MAIN EXECUTION STARTS HERE
-document.getElementById('pageTitle').innerHTML += ' v3.9'; //APPEND THE VERSION NUMBER TO THE PAGE TITLE
+document.getElementById('pageTitle').innerHTML += ' v3.92'; //APPEND THE VERSION NUMBER TO THE PAGE TITLE
